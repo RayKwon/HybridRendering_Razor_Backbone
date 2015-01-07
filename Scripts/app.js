@@ -10,11 +10,13 @@
     },
     moveToIndexPage: function (e) {
       e.preventDefault();
-      App.router.navigate('/', { trigger: true });
+      var url = $(e.currentTarget).attr('href');
+      App.router.navigate(url, { trigger: true });
     },
     moveToUsersPage: function (e) {
       e.preventDefault();
-      App.router.navigate('users', { trigger: true });
+      var url = $(e.currentTarget).attr('href');
+      App.router.navigate(url, { trigger: true });
     }
   });
 
