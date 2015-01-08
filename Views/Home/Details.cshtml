@@ -1,0 +1,19 @@
+﻿@model HybridRendering_Razor_Backbone.Models.User
+
+@{
+  ViewBag.Title = "Details";
+}
+
+<div class="user-detail">
+  <h2>User Details</h2>
+  <dl class="dl-horizontal">
+    <dt>Id</dt>
+    <dd>@Model.Id</dd>
+    <dt>Name</dt>
+    <dd>@Model.Name</dd>
+    <dt>Suburb</dt>
+    <dd>@Model.Suburb</dd>
+    <dt>Birthday</dt>
+    <dd>@Model.Birthday</dd>
+  </dl>
+</div>

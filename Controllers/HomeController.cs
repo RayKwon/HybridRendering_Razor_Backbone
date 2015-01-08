@@ -17,9 +17,9 @@ namespace HybridRendering_Razor_Backbone.Controllers
             if (_users == null)
             {
                 _users = new List<User>();
-                _users.Add(new User { Id = 1, Name="Jay", Suburb="Clayton" });
-                _users.Add(new User { Id = 2, Name = "Sujin", Suburb = "Camberwell" });
-                _users.Add(new User { Id = 3, Name = "Uyoung", Suburb = "Melbourne" });
+                _users.Add(new User { Id = 1, Name="Jay", Suburb="Clayton", Birthday="5/5/1980" });
+                _users.Add(new User { Id = 2, Name = "Sujin", Suburb = "Camberwell", Birthday = "12/31/1990" });
+                _users.Add(new User { Id = 3, Name = "Uyoung", Suburb = "Melbourne", Birthday = "12/9/2014" });
             }
         }
 
@@ -51,18 +51,19 @@ namespace HybridRendering_Razor_Backbone.Controllers
             }            
         }
 
-        public ActionResult About()
+        [Route("~/users/{id}")]
+        public ActionResult Details(int id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (!Request.IsAjaxRequest())
+            {
+                return View(_users.Find(x=>x.Id==id));
+            }
+            else
+            {
+                var model = _users.Find(x=>x.Id==id);
+                var viewAsString = RazorViewHelper.RenderAsString(this, "Details", model);
+                return Json(new { view = viewAsString, model = model }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
