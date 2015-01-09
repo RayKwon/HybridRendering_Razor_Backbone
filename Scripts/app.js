@@ -39,8 +39,7 @@
     }
   });
 
-  App.UsersView = Backbone.View.extend({
-    el: '.user-list',
+  App.UsersView = Backbone.View.extend({    
     initialize: function () {
       if (this.collection) {
         this.collection.each(function (item) {
@@ -54,20 +53,28 @@
   App.Router = Backbone.Router.extend({
     routes: {
       '(/)': 'index',
-      'users(/)': 'users',
+      'users': 'users',
       'users/:id' : 'detail'
     },
+
     index: function () {
       $.getJSON('/').done(function (result) {
         $('.body-content').html(result.view);
       });
     },
+    
     users: function () {
       $.getJSON('/users').done(function (result) {
+
+        // 서버측에서 전달받은 HTML 덩어리를 렌더링한다.
         $('.body-content').html(result.view);
-        new App.UsersView({ collection: new App.UserItems(result.model) });
+
+        // 서버측에서 전달받은 모델 데이터를 Backbone View 인스턴스의 모델에 전달한다.
+        new App.UsersView({el: '.user-list', collection: new App.UserItems(result.model) });
+
       });
     },
+    
     detail: function (id) {
       $.getJSON('/users/'+id).done(function (result) {
         $('.body-content').html(result.view);

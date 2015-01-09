@@ -1,4 +1,5 @@
-﻿@model IEnumerable<HybridRendering_Razor_Backbone.Models.User>
+﻿
+@model IEnumerable<HybridRendering_Razor_Backbone.Models.User>
 
 @{
     ViewBag.Title = "Users";
@@ -17,7 +18,9 @@
           <td>@item.Suburb</td>
           <td>
             <button class="btn btn-primary" data-hook="btn-delete">Delete</button>
-            <a href="@Url.Action("Details","Home", new{id=item.Id})" class="btn btn-primary" data-hook="btn-details">Details</a>
+            <a href="@Url.Action("Details","Home", new{id=item.Id})" 
+               class="btn btn-primary" 
+               data-hook="btn-details">Details</a>
           </td>
         </tr>
       }
@@ -30,7 +33,7 @@
     (function(App){
       var data = @Html.Raw(Json.Encode(Model));
       var items = new App.UserItems(data);
-      new App.UsersView({collection:items});
+      new App.UsersView({el: '.user-list', collection:items});
     })(App);    
   </script>
 }
